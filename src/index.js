@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 //import path from 'path';
 import './database';
+import router from './routes/products.routes';
 
 //console.log('estoy en mi backend');
 
@@ -33,7 +34,10 @@ app.use(express.static('public'));
 
 
 //Rutas
-app.get('/', (req, res) => {
+
+app.use('/apiBurgers', router)
+
+/* app.get('/', (req, res) => {
     res.send('esto es una prueba desde el backend')
 });
 
@@ -41,3 +45,4 @@ app.get('/', (req, res) => {
 app.delete('/borrarAlgo', (req, res) => {
     res.send('se borró algo')
 });
+ */
