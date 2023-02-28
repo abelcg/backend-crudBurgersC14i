@@ -12,7 +12,7 @@ import router from './routes/products.routes';
 const app = express();
 
 //crear un puerto
-app.set('port', process.env.PORT || 4000);
+app.set('port', process.env.PORT || 4001);
 
 app.listen(app.get('port'), ()=> {
 
