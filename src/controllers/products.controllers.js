@@ -1,23 +1,93 @@
+import Product from "../models/product";
 
-const showProducts = (req, res) => {
-    res.send('listar todos  los productos')
+const showProducts = async (req, res) => {
+  try {
+    //voy obtener un array con los productos guardados en BD
+    const productsList = await Product.find();
+    res.status(200).json(productsList);
+  } catch (error) {
+    console.log(error);
+    res.status(404).json({ message: "Error getting products list" });
+  }
 };
 
-const getOneProduct = (req, res) => {
-    res.send('se encontró el producto')
-}
+const getOneProduct = async (req, res) => {
+  try {
+    console.log(req.params);
 
-const createProduct = (req, res) => {
-    res.send('se creó el producto')
-}
+    //buscamos el producto en mi BD
+    const productSearch = await Product.findById(req.params.id);
+    res.status(200).json(productSearch);
+  } catch (error) {
+    console.log(error);
+    res
+      .status(404)
+      .json({ message: "Error searching for the requested product" });
+  }
+};
 
-const updateProduct = (req, res) => {
-    res.send('se actualizó el producto')
-}
+const createProduct = async (req, res) => {
+  try {
+    console.log(req.body);
 
-const deleteProduct = (req, res) => {
-    res.send('se borró el producto')
-}
+    const { productName, price, urlImg, category } = req.body;
 
+    //validar
 
-export { showProducts, createProduct, getOneProduct, updateProduct, deleteProduct}
+    //crear un objeto para guardarlo en la BD
+    const newProduct = new Product({
+      /* productName: req.body.productName,
+            price: req.body.price,
+            urlImg: req.body.urlImg,
+            category: req.body.category */
+
+      productName,
+      price,
+      urlImg,
+      category,
+    });
+
+    //guardar en BD
+
+    await newProduct.save();
+    res.status(201).json({ message: "Product created successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ message: "Error creating product" });
+  }
+};
+
+const updateProduct = async (req, res) => {
+  try {
+    //buscamos el producto por id y lo modifico con los datos que me llegan desde el body
+
+    await Product.findByIdAndUpdate(req.params.id, req.body);
+    res.status(200).json({ message: "Product updated successfully" });
+  } catch (error) {
+    console.log(error);
+    res
+      .status(404)
+      .json({ message: "Error searching for the requested product" });
+  }
+};
+
+const deleteProduct = async (req, res) => {
+  try {
+    //buscar el producto por su id  y luego lo elimino
+    await Product.findByIdAndDelete(req.params.id);
+    res.status(200).json({ message: "Product successfully deleted " });
+  } catch (error) {
+    console.log(error);
+    res
+      .status(404)
+      .json({ message: "Error searching for the requested product" });
+  }
+};
+
+export {
+  showProducts,
+  createProduct,
+  getOneProduct,
+  updateProduct,
+  deleteProduct,
+};
