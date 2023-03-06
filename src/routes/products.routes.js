@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { check } from "express-validator";
+//import { check } from "express-validator";
 import {
   showProducts,
   createProduct,
@@ -7,6 +7,7 @@ import {
   updateProduct,
   deleteProduct,
 } from "../controllers/products.controllers";
+import productValidate from "../middlewares/productValidation";
 
 //creamos la instancia del router
 const router = Router();
@@ -16,7 +17,8 @@ const router = Router();
 router
   .route("/")
   .get(showProducts)
-  .post(
+  .post(productValidate, createProduct)
+  /* .post(
     [
       check("productName", "El nombre del producto es obligatorio").notEmpty(),
       check(
@@ -33,7 +35,7 @@ router
       }),
     ],
     createProduct
-  );
+  ); */
 
 router
   .route("/:id")

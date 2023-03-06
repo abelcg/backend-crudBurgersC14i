@@ -33,14 +33,6 @@ const createProduct = async (req, res) => {
 
     const { productName, price, urlImg, category } = req.body;
 
-    //validar
-
-    const errors = validationResult(req);
-    //pregunatr si tengo errores 
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-
-    }
     //crear un objeto para guardarlo en la BD
     const newProduct = new Product({
       /* productName: req.body.productName,
