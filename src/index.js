@@ -4,6 +4,9 @@ import cors from 'cors';
 //import path from 'path';
 import './database';
 import router from './routes/products.routes';
+import auth from './routes/users.routes';
+import * as dotenv from 'dotenv' 
+
 
 //console.log('estoy en mi backend');
 
@@ -24,6 +27,7 @@ app.listen(app.get('port'), ()=> {
 
 
 //middlewares
+dotenv.config()
 app.use(morgan('dev')); //nos da info de la consulta como ser el tipo, status, tiempo de ejecución
 app.use(cors()); //nos permite recibir peticiones remotas a nuestra API
 app.use(express.json());
@@ -35,7 +39,8 @@ app.use(express.static('public'));
 
 //Rutas
 
-app.use('/apiBurgers', router)
+app.use('/apiBurgers', router);
+app.use('/apiBurgers/auth', auth);
 
 /* app.get('/', (req, res) => {
     res.send('esto es una prueba desde el backend')
