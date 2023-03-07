@@ -1,7 +1,7 @@
 import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
-//import path from 'path';
+import path from 'path';
 import './database';
 import router from './routes/products.routes';
 import auth from './routes/users.routes';
@@ -33,8 +33,8 @@ app.use(cors()); //nos permite recibir peticiones remotas a nuestra API
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));//estos  dos últimos permiten recibir e interpretar el json de la req
 
-app.use(express.static('public'));
-//app.use(express.static(path.join(__dirname, '../public')));
+//app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, '../public')));
 
 
 //Rutas
