@@ -1,3 +1,4 @@
+import { validationResult } from "express-validator";
 import Product from "../models/product";
 
 const showProducts = async (req, res) => {
@@ -31,8 +32,6 @@ const createProduct = async (req, res) => {
     console.log(req.body);
 
     const { productName, price, urlImg, category } = req.body;
-
-    //validar
 
     //crear un objeto para guardarlo en la BD
     const newProduct = new Product({
